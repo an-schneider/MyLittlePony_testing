@@ -1,7 +1,10 @@
 class ListOperations:
 
-    def __init__(self,data):
+    def __init__(self,data, sum_num=None, max_difference=None, extremes=None):
         self.data = data
+        self.sum_num = sum_num
+        self.max_difference = max_difference
+        self.extremes = extremes
 
     def sum_numbers(self):
         """ returns the sum of numbers in an inputted list
@@ -29,7 +32,7 @@ class ListOperations:
 
         sum = 0
         try:
-            for num in self.data:                      # General OH Question: Is conversion just a matter of changing num_list to self.data?
+            for num in self.data: # General OH Question: Is conversion just a matter of changing num_list to self.data?
                 sum = sum + num
         except TypeError:
             logging.error("There is a TypeError")
@@ -40,6 +43,7 @@ class ListOperations:
 
         logging.info("All entries successfully added up.")
 
+        self.sum_num = sum
         return sum
 
     def MaxDiff(self):
@@ -69,19 +73,23 @@ class ListOperations:
             logging.warning('This is not a list')
 
         try:
-            max_diff =self.data[1] - self.data[0]
+            max_diff = self.data[1] - self.data[0]
             i = 0
             j = i + 1
             for i in self.data:
                 for j in self.data:
-                    if (j - i > max_diff):
+                    if j - i > max_diff:
                         max_diff = j - i
-            return max_diff
+                        self.max_difference = max_diff
+                        return max_diff
         except TypeError:
             pass
         except ValueError:
             pass
         logging.info('Status quo')
+
+
+
 
     def findextremes(self):
         """ returns the smallest and largest elements in an inputted list
@@ -118,6 +126,8 @@ class ListOperations:
         maximum = np.max(self.data)
         logging.info("# Return Minimum and Maximum")
         logger.debug('Output:%s,%s', str(minimum), str(maximum))
+
+        self.extremes = [minimum, maximum]
         return [minimum, maximum]
 
     def contains_imaginary(self):
@@ -160,11 +170,9 @@ class ListOperations:
             logging.error('Input list contains imaginary elements')
             raise ValueError('Input list contains imaginary elements!')
 
-    def main(self):
-        SumTotal = self.sum_numbers()
-        MaxDifference = self.MaxDiff()
-        MinAndMax = self.findextremes()
-        return SumTotal, MaxDifference, MinAndMax
-
 List1 = ListOperations([1,2,3])
-print(List1.main())
+List1.sum_numbers()
+List1.MaxDiff()
+List1.findextremes()
+
+print(List1.sum_num, List1.max_difference, List1.extremes)
