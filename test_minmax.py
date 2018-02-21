@@ -15,14 +15,17 @@ def test_minmax():
     assert list2.extremes == [0, 10]
     assert list3.extremes == [-3.0, 54.0]
 
-    #def test_imaginary_input():
-    #    with pytest.raises(ValueError):
-    #        findextremes([3+2j, 4])
+    def test_imaginary_input():
+        list4 = ListOperations([3+2j, 4])
+        with pytest.raises(ValueError):
+            list4.findextremes()
 
-    #def test_empty_input():
-    #    with pytest.raises(TypeError):
-    #        findextremes([])
+    def test_empty_input():
+        list5 = ListOperations([])
+        with pytest.raises(TypeError):
+            list5.findextremes()
 
-    #def test_non_list_in():
-    #    with pytest.raises(TypeError):
-    #        findextremes('Hello World')
+    def test_non_list_in():
+        list6 = ListOperations([])
+        with pytest.raises(TypeError):
+            list6.findextremes()
