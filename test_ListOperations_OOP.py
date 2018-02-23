@@ -64,3 +64,12 @@ def test_ListOperations_OOP():
     assert list1.max_difference == 17
     assert list2.max_difference == 15
     assert list3.max_difference - 1.4 < 0.0001
+
+    with pytest.raises(ValueError):
+        list4 = ListOperations([math.sqrt(2), math.sqrt(-5), math.sqrt(8)])
+        list4.main()
+    with pytest.raises(TypeError):
+        list5 = ListOperations(['9', 5, 9, 5, 9, 5])
+        list5.main()
+    with pytest.raises(ImportError):
+        import MyLittlePony_testing
