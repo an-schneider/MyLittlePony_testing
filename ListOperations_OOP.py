@@ -181,7 +181,9 @@ class ListOperations:
             logging.error('Input list contains imaginary elements')
             raise ValueError('Input list contains imaginary elements!')
 
-    def main(self):              # Run main module to get all desired outputs
+    def main(self): # Run main module to get all desired outputs
+        """Runs sum_numbers, MaxDiff, and findextremes  """
+        
         self.sum_numbers()
         self.MaxDiff()
         self.findextremes()
