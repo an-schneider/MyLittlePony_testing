@@ -59,18 +59,17 @@ class ListOperations:
         return sum
 
     def MaxDiff(self):
-        import numpy as np
-
         """ returns the MaxDiff value
 
-        :param:  num_list: list of values
-        :param:  i : the index in num_list
-        :param:  j : the index i + 1 in num_list
-        :returns: return the max two adjacent diff value from input num_list
-        :raises: ImportError
-        :raises: TypeError
-        :raises: ValueError
-        """
+            :param:  num_list: list of values
+            :param:  i : the index in num_list
+            :param:  j : the index i + 1 in num_list
+            :returns: return the max two adjacent diff value from input num_list
+            :raises: ImportError
+            :raises: TypeError
+            :raises: ValueError
+            """
+        import numpy as np
 
         try:
             import logging
@@ -183,7 +182,7 @@ class ListOperations:
 
     def main(self): # Run main module to get all desired outputs
         """Runs sum_numbers, MaxDiff, and findextremes  """
-        
+
         self.sum_numbers()
         self.MaxDiff()
         self.findextremes()
