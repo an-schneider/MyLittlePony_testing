@@ -46,10 +46,10 @@ class ListOperations:
                 sum = sum + num
         except TypeError:
             logging.error("There is a TypeError")
-            print("num_list must be a list containing variable type entries.")
+            raise TypeError("num_list must be a list containing variable type entries.")
         except ValueError:
             logging.error("There is a ValueError")
-            print("The entries list must consist only of real numbers.")
+            raise ValueError("The entries list must consist only of real numbers.")
 
         logging.info("All entries successfully added up.")
 
@@ -57,6 +57,7 @@ class ListOperations:
         return sum
 
     def MaxDiff(self):
+        import numpy as np
         """ returns the MaxDiff value
 
         :param:  num_list: list of values
@@ -83,19 +84,14 @@ class ListOperations:
             logging.warning('This is not a list')
 
         try:
-            max_diff = self.data[1] - self.data[0]
-            i = 0
-            j = i + 1
-            for i in self.data:
-                for j in self.data:
-                    if j - i > max_diff:
-                        max_diff = j - i
-                        self.max_difference = max_diff
-                        return max_diff
+            diff_val = np.diff(self.data)
+            self.max_difference = np.max(np.absolute(diff_val))
+
         except TypeError:
             pass
         except ValueError:
             pass
+
         logging.info('Status quo')
 
     def findextremes(self):
@@ -148,7 +144,7 @@ class ListOperations:
         return imaginary_elements
 
     def check_list(self):
-        '''Checks if input is a list
+        '''Checks if input is a list of numbers
 
         :param: num_list
         :returns: Boolean indicating if the input data type is a list'''
@@ -178,8 +174,5 @@ class ListOperations:
         if self.imaginary_elements is True:
             logging.error('Input list contains imaginary elements')
             raise ValueError('Input list contains imaginary elements!')
-
-
-
 
 
