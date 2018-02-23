@@ -6,6 +6,8 @@ logging.basicConfig(filename='divlog.txt', format=log_format,
                     datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG,
                     filemode='w')
 logger = logging.getLogger()
+
+
 class ListOperations:
 
     def __init__(self, data, sum_num=None, max_difference=None, extremes=None, imaginary_elements=None, list=None):
@@ -42,7 +44,7 @@ class ListOperations:
 
         sum = 0
         try:
-            for num in self.data: # General OH Question: Is conversion just a matter of changing num_list to self.data?
+            for num in self.data:
                 sum = sum + num
         except TypeError:
             logging.error("There is a TypeError")
@@ -58,6 +60,7 @@ class ListOperations:
 
     def MaxDiff(self):
         import numpy as np
+
         """ returns the MaxDiff value
 
         :param:  num_list: list of values
@@ -96,6 +99,7 @@ class ListOperations:
 
     def findextremes(self):
         """ returns the smallest and largest elements in an inputted list
+
         :param: num_list
         :returns: the smallest and largest elements in input num_list
         :raises: TypeError: Input list must not be empty
@@ -129,11 +133,11 @@ class ListOperations:
         return [minimum, maximum]
 
     def contains_imaginary(self):
-        '''Checks if input contains imaginary numbers
+        """Checks if input contains imaginary numbers
 
         :param: num_list
         :returns: Boolean indicating if the input contains imaginary numbers
-        '''
+        """
         import numpy as np
         is_real = np.isreal(self.data)
         if False in is_real:
@@ -144,10 +148,11 @@ class ListOperations:
         return imaginary_elements
 
     def check_list(self):
-        '''Checks if input is a list of numbers
+        """Checks if input is a list of numbers
 
         :param: num_list
-        :returns: Boolean indicating if the input data type is a list'''
+        :returns: Boolean indicating if the input data type is a list"""
+
         if type(self.data) == list:
             list_input = True
         else:
@@ -156,12 +161,13 @@ class ListOperations:
         return list_input
 
     def check_input(self):
-        '''Checks if the input meets all of the criteria required of minmax.py
+        """Checks if the input meets all of the criteria required of minmax.py
 
          :param: num_list
          :raises: TypeError: If the input is not a list
          :raises: TypeError: If the input list has no entries
-         :raises: ValueError: If the input list contains imaginary elements'''
+         :raises: ValueError: If the input list contains imaginary elements"""
+
         # Check that input is a list
         self.check_list()
         if self.list is False:
@@ -175,13 +181,10 @@ class ListOperations:
             logging.error('Input list contains imaginary elements')
             raise ValueError('Input list contains imaginary elements!')
 
-    def main(self):
+    def main(self):              # Run main module to get all desired outputs
         self.sum_numbers()
         self.MaxDiff()
         self.findextremes()
         print(self.sum_num)
         print(self.max_difference)
         print(self.extremes)
-
-testlist = ListOperations([1,2,3])
-testlist.main()
