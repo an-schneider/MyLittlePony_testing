@@ -1,15 +1,25 @@
+# Set up logger
+import logging
+
+log_format = '%(levelname)s %(asctime)s %(message)s'
+logging.basicConfig(filename='divlog.txt', format=log_format,
+                    datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG,
+                    filemode='w')
+logger = logging.getLogger()
 class ListOperations:
 
-    def __init__(self,data, sum_num=None, max_difference=None, extremes=None):
+    def __init__(self, data, sum_num=None, max_difference=None, extremes=None, imaginary_elements=None, list=None):
         self.data = data
         self.sum_num = sum_num
         self.max_difference = max_difference
         self.extremes = extremes
+        self.imaginary_elements = imaginary_elements
+        self.list = list
 
     def sum_numbers(self):
         """ returns the sum of numbers in an inputted list
 
-            :param numlist: list of values – each entry will be added up
+            :param: numlist: list of values, each entry will be added up
             :returns: sum of each entries from input num_list
             :raises: TypeError
             :raises: ValueError
@@ -88,9 +98,6 @@ class ListOperations:
             pass
         logging.info('Status quo')
 
-
-
-
     def findextremes(self):
         """ returns the smallest and largest elements in an inputted list
         :param: num_list
@@ -100,26 +107,21 @@ class ListOperations:
         :raises: ImportError: Numpy must be installed in Env
         """
 
-        # Set up logger
-        import logging
-        log_format = '%(levelname)s %(asctime)s %(message)s'
-        logging.basicConfig(filename='divlog.txt', format=log_format,
-                            datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG,
-                            filemode='w')
-        logger = logging.getLogger()
         # Make sure list criteria are met
         try:
             self.check_input()
         except ValueError:
             logging.error('Input must be a list composed of real, numeric entries')
-            quit()
+            raise ValueError('Input must be a list composed of real, numeric entries')
         except TypeError:
             logging.error('Input must be list with entries')
-            quit()
+            raise TypeError('Input must be list with entries')
+
         try:
             import numpy as np
         except ImportError:
             logging.error('Numpy must be installed in your local environment!')
+
         logger.info("# Find Minimum and Maximum")
         logger.debug('Input: %s', str(self.data))
         minimum = np.min(self.data)
@@ -132,47 +134,52 @@ class ListOperations:
 
     def contains_imaginary(self):
         '''Checks if input contains imaginary numbers
+
         :param: num_list
         :returns: Boolean indicating if the input contains imaginary numbers
         '''
         import numpy as np
-        is_real = np.isreal(self)
+        is_real = np.isreal(self.data)
         if False in is_real:
             imaginary_elements = True
         else:
             imaginary_elements = False
+        self.imaginary_elements = imaginary_elements
         return imaginary_elements
 
     def check_list(self):
         '''Checks if input is a list
+
         :param: num_list
         :returns: Boolean indicating if the input data type is a list'''
         if type(self.data) == list:
             list_input = True
         else:
             list_input = False
+        self.list = list_input
         return list_input
 
     def check_input(self):
         '''Checks if the input meets all of the criteria required of minmax.py
+
          :param: num_list
          :raises: TypeError: If the input is not a list
          :raises: TypeError: If the input list has no entries
          :raises: ValueError: If the input list contains imaginary elements'''
         # Check that input is a list
-        if self.check_list() is False:
+        self.check_list()
+        if self.list is False:
             raise TypeError('Input must be a list')
         # Check that list has entries
         if len(self.data) == 0:
             raise TypeError('Input list is empty')
         # Check for imaginary numbers in list
-        if self.contains_imaginary is True:
+        self.contains_imaginary()
+        if self.imaginary_elements is True:
             logging.error('Input list contains imaginary elements')
             raise ValueError('Input list contains imaginary elements!')
 
-List1 = ListOperations([1,2,3])
-List1.sum_numbers()
-List1.MaxDiff()
-List1.findextremes()
 
-print(List1.sum_num, List1.max_difference, List1.extremes)
+
+
+
